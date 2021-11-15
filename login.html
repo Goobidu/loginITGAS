@@ -24,7 +24,7 @@
     </div>
 
     <div >
-        <div align="center"  >
+        <div align="center"  > 
 
             <table  class="w3-card" class="table2balls" style="margin-top: 50px;">
                 <tr>
@@ -33,15 +33,16 @@
                         </div><br>
                         <table align="center">
                             <tr>
+                                <form id="myForm">
                                 <th>
                                     &zwnj; &zwnj; &zwnj; <input type="text" align="right" class="picoclassa" placeholder="Enter email here">&zwnj; &zwnj; &zwnj; <br>
-                                    &zwnj; &zwnj; &zwnj; <input type="password" align="right" placeholder="Enter password here">&zwnj; &zwnj; &zwnj; <br>
+                                    &zwnj; &zwnj; &zwnj; <input type="password" align="right"  id="ladamad" placeholder="Enter password here">&zwnj; &zwnj; &zwnj; <br>
 
                                     <div align="center" class="content2"> Stay logged: &zwnj; <input type="checkbox">
                                     </div>
                             </tr>
                             <tr>
-                                <form>
+                                
                                     <th>
                                         <div align="center">
                                             <input type="submit" id="enter" name="enter" class="btn-default"
@@ -60,5 +61,48 @@
         </div>
     </div>
 </body>
+<script src="https://code.jquery.com/jquery-3.6.0.min.js"
+integrity="sha256-/xUj+3OJU5yExlq6GSYGSHk7tPXikynS7ogEvDej/m4="
+crossorigin="anonymous">
+</script>
+<script type="text/javascript">
+	console.log("Ahoj");
+
+	$(function() {
+
+		function downloadData() {
+            let data = {
+                email: $(".picoclassa").val(),
+                password: $(".ladamad").val(),
+                rememberMe: true
+            }
+			$.ajax({
+				type: "POST",
+				accept: "application/json",
+                contentType: "application/json",
+                data: JSON.stringify(data),
+                url: "https://localhost:5001;http://localhost:5000"
+			}).done(function (data) {
+				console.log(data);
+				redrawData(data);
+			});
+		}
+
+		function redrawData(data) {
+			var output = '';
+
+			if($(data).length > 0) {
+
+				$(data).each(function(){
+					output += `<div class="row"><div class="item">${this.name}</div></div>`;
+				});
+			}
+
+			$('#content').html(output);
+		}
+
+		downloadData();
+	});
+</script>
 
 </html>
